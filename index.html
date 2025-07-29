@@ -3,198 +3,371 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Skor Pertandingan Basket</title>
+    <title>Scoreboard Final</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Graduate&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Graduate:wght@400;500;700;900&display=swap"
       rel="stylesheet"
     />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              graduate: ["Graduate", "cursive"],
-            },
-            animation: {
-              float: "float 3s ease-in-out infinite",
-              shine: "shine 3s linear infinite",
-            },
-          },
-        },
-      }
-    </script>
     <style>
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
+      body {
+        font-family: "Graduate", sans-serif;
+        background-color: #ffff;
+        color: #18181b;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
       }
-      @keyframes shine {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
+      [contenteditable]:empty:before {
+        content: attr(placeholder);
+        color: #a1a1aa;
+        font-weight: 500;
+      }
+      .score-update-animation {
+        animation: score-pop 0.3s ease-out;
+      }
+      @keyframes score-pop {
+        50% {
+          transform: scale(1.1);
         }
       }
       * {
-        font-family: "Graduate", serif;
+        transition: background-color 0.2s ease, color 0.2s ease,
+          transform 0.15s ease, box-shadow 0.2s ease;
+      }
+      [contenteditable]:focus {
+        background-color: #eef2ff;
+        box-shadow: 0 0 0 2px #6366f1;
       }
     </style>
   </head>
-  <body
-    class="bg-[url(./bg.png)] bg-cover flex h-screen flex-col text-center px-10"
-  >
-    <header
-      class="w-full flex justify-center relative h-[150px] md:h-[200px] lg:h-[250px]"
-    >
-      <div
-        class="flex w-[200px] h-[200px] md:w-[300px] md:h-[300px] lg:w-[400px] lg:h-[400px] bg-white rounded-full absolute top-[-100px] md:top-[-150px] lg:top-[-200px] to- items-center text-center px-[3rem]"
-      >
-        <img
-          src="./bkpm.png"
-          alt=""
-          class="w-auto h-auto max-w-full max-h-full object-contain mt-[10rem]"
-        />
-      </div>
-    </header>
+  <body>
     <div
-      class="flex flex-row justify-around px-4 md:px-8 lg:px-16 w-fit mx-auto rounded-md space-x-2 md:space-x-3 lg:space-x-5"
+      class="h-screen flex flex-col justify-between items-center bg-[url(./bbg.png)] bg-cover"
     >
-      <div
-        class="leftboard flex flex-col gap-y-4 md:gap-y-6 lg:gap-y-8 p-3 md:p-4 lg:p-6"
-      >
-        <h1
-          id="leftTeamName"
-          class="text-2xl md:text-4xl lg:text-6xl text-white"
-          contenteditable="true"
-        >
-          nama team
-        </h1>
-        <div
-          class="bg-gray-800 px-4 md:px-8 lg:px-16 flex flex-col justify-center text-center rounded-3xl"
-        >
-          <h1
-            id="leftScore"
-            class="text-white text-[80px] md:text-[150px] lg:text-[250px]"
-          >
-            0
-          </h1>
-        </div>
-        <div
-          class="control flex flex-row justify-between text-center items-center gap-1"
-        >
-          <button
-            class="p-2 md:p-4 lg:p-6 rounded-md text-white bg-gray-500 text-lg md:text-xl lg:text-2xl hover:bg-orange-600"
-            onclick="addScore('left', 1)"
-          >
-            +1
-          </button>
-          <button
-            class="p-2 md:p-4 lg:p-6 rounded-md text-white bg-gray-500 text-lg md:text-xl lg:text-2xl hover:bg-orange-600"
-            onclick="addScore('left', 2)"
-          >
-            +2
-          </button>
-          <button
-            class="p-2 md:p-4 lg:p-6 rounded-md text-white bg-gray-500 text-lg md:text-xl lg:text-2xl hover:bg-orange-600"
-            onclick="addScore('left', 3)"
-          >
-            +3
-          </button>
-          <button
-            class="p-2 md:p-4 lg:p-6 rounded-md text-white bg-gray-500 text-lg md:text-xl lg:text-2xl hover:bg-orange-600"
-            onclick="subtractScore('left')"
-          >
-            (-1)
-          </button>
-        </div>
+      <div class="flex justify-center w-full items-center text-center">
+        <img src="./bkpm.png" alt="Logo BKPM" class="h-32 mt-10" />
+        <!-- <div
+          id="date-display"
+          class="text-right text-xs sm:text-sm font-semibold text-blue-600"
+        ></div> -->
       </div>
 
-      <div class="centerboard flex flex-col justify-center">
-        <div class="flex flex-col justify-center text-center rounded-3xl">
-          <h1
-            id="timer"
-            class="text-white text-[60px] md:text-[100px] lg:text-[150px] font-bold"
+      <div
+        contenteditable="true"
+        placeholder="Jenis Laga"
+        class="text-4xl sm:text-5xl font-extrabold text-slate-700 outline-none rounded-lg px-2 py-1"
+      >
+        SCOREBOARD
+      </div>
+      <main class="sm:p-4 grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
+        <section
+          class="flex flex-col items-center justify-between text-center p-3 sm:p-6 bg-blue-600 rounded-2xl sm:rounded-3xl shadow-2xl border"
+        >
+          <div
+            id="team-a-name"
+            contenteditable="true"
+            placeholder="Tim A"
+            class="w-full text-3xl sm:text-4xl font-bold text-white outline-none rounded-lg px-2 py-1 focus:bg-slate-600"
           >
-            00:00
-          </h1>
-          <div class="flex flex-row justify-center gap-2">
+            TIM A
+          </div>
+          <div
+            id="score-a"
+            class="my-2 font-black text-white"
+            style="font-size: clamp(5rem, 25vw, 12rem); line-height: 1"
+          >
+            0
+          </div>
+          <div class="w-full max-w-xs grid grid-cols-4 gap-2">
             <button
-              id="playPauseBtn"
-              class="p-3 md:p-6 lg:p-10 rounded-md text-white bg-gray-500 text-xl md:text-3xl lg:text-5xl hover:bg-orange-600"
-              onclick="toggleTimer()"
+              onclick="updateScore('a', 1)"
+              class="bg-blue-100 hover:bg-blue-200 h-14 rounded-lg font-semibold text-blue-800 text-xl transform hover:-translate-y-1"
             >
-              <span id="playPauseText">Play</span>
+              +1
             </button>
             <button
-              class="p-2 md:p-3 lg:p-6 rounded-md text-white bg-gray-500 text-sm md:text-lg lg:text-xl hover:bg-orange-600"
-              onclick="resetGame()"
+              onclick="updateScore('a', 2)"
+              class="bg-blue-100 hover:bg-blue-200 h-14 rounded-lg font-semibold text-blue-800 text-xl transform hover:-translate-y-1"
             >
-              Reset
+              +2
+            </button>
+            <button
+              onclick="updateScore('a', 3)"
+              class="bg-blue-100 hover:bg-blue-200 h-14 rounded-lg font-semibold text-blue-800 text-xl transform hover:-translate-y-1"
+            >
+              +3
+            </button>
+            <button
+              onclick="updateScore('a', -1)"
+              class="bg-red-100 hover:bg-red-200 h-14 rounded-lg font-semibold text-red-800 text-xl transform hover:-translate-y-1"
+            >
+              -1
+            </button>
+          </div>
+        </section>
+
+        <section
+          class="order-first lg:order-none flex flex-col items-center justify-center text-center gap-10 p-3"
+        >
+          <div
+            id="game-type"
+            contenteditable="true"
+            placeholder="Jenis Laga"
+            class="text-4xl sm:text-5xl font-extrabold text-slate-700 outline-none rounded-lg px-2 py-1"
+          >
+            BASKET
+          </div>
+          <div
+            id="timer-display"
+            class="font-black text-slate-800"
+            style="font-size: clamp(4.5rem, 22vw, 8rem); line-height: 1"
+          >
+            00:00
+          </div>
+          <div
+            id="round-display-text"
+            class="text-xl sm:text-2xl font-bold text-slate-600"
+          >
+            Babak 1
+          </div>
+        </section>
+
+        <section
+          class="flex flex-col items-center justify-between text-center p-3 sm:p-6 bg-emerald-600 rounded-2xl sm:rounded-3xl shadow-sm border border-gray-200/50"
+        >
+          <div
+            id="team-b-name"
+            contenteditable="true"
+            placeholder="Tim B"
+            class="w-full text-3xl sm:text-4xl font-bold text-white outline-none rounded-lg px-2 py-1 focus:bg-slate-600"
+          >
+            TIM B
+          </div>
+          <div
+            id="score-b"
+            class="my-2 font-black text-white"
+            style="font-size: clamp(5rem, 25vw, 12rem); line-height: 1"
+          >
+            0
+          </div>
+          <div class="w-full max-w-xs grid grid-cols-4 gap-2">
+            <button
+              onclick="updateScore('b', 1)"
+              class="bg-emerald-100 hover:bg-emerald-200 h-14 rounded-lg font-semibold text-emerald-800 text-xl transform hover:-translate-y-1"
+            >
+              +1
+            </button>
+            <button
+              onclick="updateScore('b', 2)"
+              class="bg-emerald-100 hover:bg-emerald-200 h-14 rounded-lg font-semibold text-emerald-800 text-xl transform hover:-translate-y-1"
+            >
+              +2
+            </button>
+            <button
+              onclick="updateScore('b', 3)"
+              class="bg-emerald-100 hover:bg-emerald-200 h-14 rounded-lg font-semibold text-emerald-800 text-xl transform hover:-translate-y-1"
+            >
+              +3
+            </button>
+            <button
+              onclick="updateScore('b', -1)"
+              class="bg-red-100 hover:bg-red-200 h-14 rounded-lg font-semibold text-red-800 text-xl transform hover:-translate-y-1"
+            >
+              -1
+            </button>
+          </div>
+        </section>
+      </main>
+
+      <footer class="sticky bottom-0 w-full p-3 bg-transparent">
+        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row gap-3">
+          <div
+            id="setup-controls"
+            class="w-full sm:w-auto grid grid-cols-3 gap-2 bg-gray-300 p-2 rounded-xl border border-gray-200"
+          >
+            <div class="flex flex-col items-center">
+              <label class="text-xs font-medium text-gray-500">Babak</label>
+              <input
+                type="number"
+                id="round-input"
+                class="w-full p-2 bg-white text-center text-lg font-semibold rounded-lg"
+                value="1"
+                min="1"
+              />
+            </div>
+            <div class="flex flex-col items-center">
+              <label class="text-xs font-medium text-gray-500">Menit</label>
+              <input
+                type="number"
+                id="minutes-input"
+                class="w-full p-2 bg-white text-center text-lg font-semibold rounded-lg"
+                value="10"
+                min="0"
+              />
+            </div>
+            <div class="flex flex-col items-center">
+              <label class="text-xs font-medium text-gray-500">Detik</label>
+              <input
+                type="number"
+                id="seconds-input"
+                class="w-full p-2 bg-white text-center text-lg font-semibold rounded-lg"
+                value="0"
+                min="0"
+                max="59"
+              />
+            </div>
+          </div>
+          <div class="w-full sm:flex-grow grid grid-cols-2 gap-3">
+            <button
+              id="start-pause-btn"
+              class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-lg h-full rounded-xl shadow-md transform hover:scale-105"
+            >
+              MULAI
+            </button>
+            <button
+              id="reset-btn"
+              class="w-full bg-red-600 hover:bg-red-700 text-white font-bold text-lg h-full rounded-xl shadow-md transform hover:scale-105"
+            >
+              RESET
             </button>
           </div>
         </div>
-      </div>
-
-      <div
-        class="rightboard flex flex-col gap-y-4 md:gap-y-6 lg:gap-y-8 p-3 md:p-4 lg:p-6"
-      >
-        <h1
-          id="rightTeamName"
-          class="text-2xl md:text-4xl lg:text-6xl text-white"
-          contenteditable="true"
-        >
-          nama team
-        </h1>
-        <div
-          class="bg-gray-800 flex flex-col justify-center text-center rounded-3xl px-4 md:px-8 lg:px-16"
-        >
-          <h1
-            id="rightScore"
-            class="text-white text-[80px] md:text-[150px] lg:text-[250px]"
-          >
-            0
-          </h1>
-        </div>
-        <div
-          class="control flex flex-row justify-between text-center items-center gap-1"
-        >
-          <button
-            class="p-2 md:p-4 lg:p-6 rounded-md text-white bg-gray-500 text-lg md:text-xl lg:text-2xl hover:bg-orange-600"
-            onclick="addScore('right', 1)"
-          >
-            +1
-          </button>
-          <button
-            class="p-2 md:p-4 lg:p-6 rounded-md text-white bg-gray-500 text-lg md:text-xl lg:text-2xl hover:bg-orange-600"
-            onclick="addScore('right', 2)"
-          >
-            +2
-          </button>
-          <button
-            class="p-2 md:p-4 lg:p-6 rounded-md text-white bg-gray-500 text-lg md:text-xl lg:text-2xl hover:bg-orange-600"
-            onclick="addScore('right', 3)"
-          >
-            +3
-          </button>
-          <button
-            class="p-2 md:p-4 lg:p-6 rounded-md text-white bg-gray-500 text-lg md:text-xl lg:text-2xl hover:bg-orange-600"
-            onclick="subtractScore('right')"
-          >
-            (-1)
-          </button>
-        </div>
-      </div>
+      </footer>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+      // State Management
+      let scoreA = 0,
+        scoreB = 0
+      let timerInterval = null,
+        totalSeconds = 0,
+        isPaused = true
+
+      // DOM Elements
+      const elements = {
+        scoreA: document.getElementById("score-a"),
+        scoreB: document.getElementById("score-b"),
+        timer: document.getElementById("timer-display"),
+        startPauseBtn: document.getElementById("start-pause-btn"),
+        resetBtn: document.getElementById("reset-btn"),
+        minutesInput: document.getElementById("minutes-input"),
+        secondsInput: document.getElementById("seconds-input"),
+        roundInput: document.getElementById("round-input"),
+        roundDisplayText: document.getElementById("round-display-text"),
+        date: document.getElementById("date-display"),
+        alarm: new Audio(
+          "https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg"
+        ),
+      }
+
+      // Functions
+      const updateDate = () => {
+        elements.date.textContent = new Date()
+          .toLocaleDateString("id-ID", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          })
+          .toUpperCase()
+          .replace(/\./g, "")
+      }
+
+      const updateRoundDisplay = () => {
+        elements.roundDisplayText.textContent = `Babak ${
+          elements.roundInput.value || 1
+        }`
+      }
+
+      window.updateScore = (team, points) => {
+        const isTeamA = team === "a"
+        const scoreDisplay = isTeamA ? elements.scoreA : elements.scoreB
+        if (isTeamA) {
+          scoreA = Math.max(0, scoreA + points)
+          scoreDisplay.textContent = scoreA
+        } else {
+          scoreB = Math.max(0, scoreB + points)
+          scoreDisplay.textContent = scoreB
+        }
+        scoreDisplay.classList.add("score-update-animation")
+        setTimeout(
+          () => scoreDisplay.classList.remove("score-update-animation"),
+          300
+        )
+      }
+
+      const formatTime = (seconds) =>
+        `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(
+          seconds % 60
+        ).padStart(2, "0")}`
+      const updateTimerDisplay = () => {
+        elements.timer.textContent = formatTime(totalSeconds)
+      }
+
+      const setTimeToInput = () => {
+        clearInterval(timerInterval)
+        isPaused = true
+        elements.startPauseBtn.textContent = "MULAI"
+        elements.startPauseBtn.className =
+          "w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-lg h-full rounded-xl shadow-md transform hover:scale-105"
+        totalSeconds =
+          (parseInt(elements.minutesInput.value) || 0) * 60 +
+          (parseInt(elements.secondsInput.value) || 0)
+        updateTimerDisplay()
+      }
+
+      const tick = () => {
+        if (totalSeconds <= 0) {
+          clearInterval(timerInterval)
+          elements.startPauseBtn.textContent = "SELESAI"
+          isPaused = true
+          elements.alarm.play()
+        } else {
+          totalSeconds--
+          updateTimerDisplay()
+        }
+      }
+
+      const toggleTimer = () => {
+        if (isPaused) {
+          if (totalSeconds > 0) {
+            isPaused = false
+            elements.startPauseBtn.textContent = "PAUSE"
+            elements.startPauseBtn.className =
+              "w-full bg-amber-500 hover:bg-amber-600 text-white font-bold text-lg h-full rounded-xl shadow-md transform hover:scale-105"
+            timerInterval = setInterval(tick, 1000)
+          }
+        } else {
+          isPaused = true
+          elements.startPauseBtn.textContent = "LANJUT"
+          elements.startPauseBtn.className =
+            "w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-lg h-full rounded-xl shadow-md transform hover:scale-105"
+          clearInterval(timerInterval)
+        }
+      }
+
+      const resetGame = () => {
+        scoreA = 0
+        scoreB = 0
+        elements.scoreA.textContent = 0
+        elements.scoreB.textContent = 0
+        updateRoundDisplay()
+        setTimeToInput()
+      }
+
+      // Event Listeners
+      document.addEventListener("DOMContentLoaded", () => {
+        updateDate()
+        updateRoundDisplay()
+        setTimeToInput()
+      })
+      elements.startPauseBtn.addEventListener("click", toggleTimer)
+      elements.resetBtn.addEventListener("click", resetGame)
+      elements.minutesInput.addEventListener("input", setTimeToInput)
+      elements.secondsInput.addEventListener("input", setTimeToInput)
+      elements.roundInput.addEventListener("input", updateRoundDisplay)
+    </script>
   </body>
 </html>
