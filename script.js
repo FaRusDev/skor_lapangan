@@ -3,7 +3,7 @@ let gameState = {
   leftScore: 0,
   rightScore: 0,
   currentPeriod: 1,
-  timeRemaining: 360, // 6 minutes in seconds
+  timeRemaining: 600, // 6 minutes in seconds
   isRunning: false,
   isGameEnded: false,
   scoreHistory: [],
@@ -173,7 +173,7 @@ function endPeriod() {
 function nextPeriod() {
   if (gameState.currentPeriod < 2) {
     gameState.currentPeriod++
-    gameState.timeRemaining = 360 // Reset to 6 minutes
+    gameState.timeRemaining = 600 // Reset to 6 minutes
     pauseTimer()
     updateDisplay()
     addToHistory(`--- Babak ${gameState.currentPeriod} Dimulai ---`)
@@ -187,7 +187,7 @@ function nextPeriod() {
 function resetPeriod() {
   if (confirm("Yakin ingin reset babak ini?")) {
     pauseTimer()
-    gameState.timeRemaining = 360 // Reset to 6 minutes
+    gameState.timeRemaining = 600 // Reset to 6 minutes
     gameState.leftScore = 0 // Reset skor kiri ke 0
     gameState.rightScore = 0 // Reset skor kanan ke 0
     updateDisplay()
@@ -231,7 +231,7 @@ function resetGame() {
   // Clear any existing localStorage data immediately (tanpa konfirmasi)
   localStorage.removeItem("basketballGameState")
   localStorage.removeItem("basketballTeamNames")
-  
+
   if (confirm("Yakin ingin reset seluruh pertandingan?")) {
     // Stop timer dan clear interval
     pauseTimer()
@@ -242,7 +242,7 @@ function resetGame() {
       leftScore: 0,
       rightScore: 0,
       currentPeriod: 1,
-      timeRemaining: 360,
+      timeRemaining: 600,
       isRunning: false,
       isGameEnded: false,
       scoreHistory: [],
@@ -273,7 +273,7 @@ function resetGame() {
 // Update game status display
 function updateGameStatus() {
   if (!gameStatusEl) return // Early return jika element tidak ada
-  
+
   let status
 
   if (gameState.isGameEnded) {
@@ -290,7 +290,7 @@ function updateGameStatus() {
   } else if (gameState.isRunning) {
     status = `Babak ${gameState.currentPeriod} - Sedang Berlangsung`
   } else if (
-    gameState.timeRemaining === 360 &&
+    gameState.timeRemaining === 600 &&
     gameState.leftScore === 0 &&
     gameState.rightScore === 0
   ) {
@@ -305,7 +305,7 @@ function updateGameStatus() {
 // Add entry to score history
 function addToHistory(entry) {
   if (!scoreHistoryEl) return // Early return jika element tidak ada
-  
+
   const timestamp = new Date().toLocaleTimeString("id-ID")
   const historyEntry = `[${timestamp}] ${entry}`
   gameState.scoreHistory.push(historyEntry)
