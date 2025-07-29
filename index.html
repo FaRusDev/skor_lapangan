@@ -349,12 +349,14 @@
       }
 
       const resetGame = () => {
-        scoreA = 0
-        scoreB = 0
-        elements.scoreA.textContent = 0
-        elements.scoreB.textContent = 0
-        updateRoundDisplay()
-        setTimeToInput()
+        if (confirm("reset pertandingan ke awal ?")) {
+          scoreA = 0
+          scoreB = 0
+          elements.scoreA.textContent = 0
+          elements.scoreB.textContent = 0
+          updateRoundDisplay()
+          setTimeToInput()
+        }
       }
 
       // Event Listeners
